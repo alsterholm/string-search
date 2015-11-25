@@ -67,6 +67,7 @@ public class TextFileReader {
         for (int j = 0; j < i; j++) {
             a[k++] = buf[j];
         }
+        r.close();
         return a;
     }
 
