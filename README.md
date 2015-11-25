@@ -1,0 +1,2 @@
+# string-search
+School project.
