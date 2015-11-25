@@ -1,12 +1,8 @@
-package STRINGSEARCH;
+package algorithms;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import static STRINGSEARCH.TextFileReader.chooseFile;
-import static STRINGSEARCH.TextFileReader.readFile;
-
+import utils.*;
 
 /**
  * Created by Jimmy on 2015-11-10.
@@ -35,7 +31,7 @@ public class StringSearch {
         String p = "few";
         char[] haystack = null;
         try {
-            haystack = readFile(chooseFile());
+            haystack = TextFileReader.readFile(TextFileReader.chooseFile());
         } catch (IOException e) {
             e.printStackTrace();
         }
