@@ -4,32 +4,35 @@ import utils.*;
 import algorithms.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by andreas on 2015-11-25.
  */
 public class Algorithms {
 
-    public static void naiveStringSearch () {
-        String p = "Lorem";
-        char[] haystack = null;
+    public static void test() {
+        Algorithm a = new NaiveStringSearch();
+        ArrayList<Integer> pos = new ArrayList<Integer>();
+        String T = "";
+
         try {
-            haystack = TextFileReader.readFile(TextFileReader.chooseFile());
+            T = new String(TextFileReader.readFile("2000000.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (char c: haystack) {
-            System.out.println(c);
-        }
-        char[] needle = p.toCharArray();
-        ArrayList<Integer> pos = new ArrayList<>();
-        pos = NaiveStringSearch.run(haystack, needle, pos);
-        for (Integer i: pos) {
-            System.out.println("Needle can be found in haystack at position: " + i);
+
+        long time = System.nanoTime();
+        a.run(T, "reprehenderit", pos);
+        long runtime = (System.nanoTime() - time) / 1000000;
+
+        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);
+        for (int i : pos) {
+            System.out.printf("Match found at position %s.\n", i);
         }
     }
 
     public static void main(String[] args) {
-        naiveStringSearch();
+        test();
     }
 }

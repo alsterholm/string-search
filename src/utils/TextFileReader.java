@@ -1,5 +1,7 @@
 package utils;
 
+import resources.Resource;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,31 +16,8 @@ import java.util.ArrayList;
  * Created by Jimmy on 2015-11-21.
  */
 public class TextFileReader {
-    private String text;
-    private String path;
-
-
-    public static String chooseFile () {
-        JFileChooser fileChooser;
-        fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
-        fileChooser.addChoosableFileFilter(filter);
-        fileChooser.setFileFilter(filter);
-        int result = fileChooser.showOpenDialog(new Frame());
-        String path = "";
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            path = selectedFile.getAbsolutePath();
-        }
-
-        return path;
-//        readFile(path, );
-
-    }
-
-    public static char[] readFile(String fnam) throws IOException {
-        InputStreamReader r = new InputStreamReader(new FileInputStream(fnam));
+    public static char[] readFile(String path) throws IOException {
+        InputStreamReader r = new InputStreamReader(Resource.class.getResourceAsStream(path));
         ArrayList<char[]> blocks = new ArrayList<char[]>();
         int bytes = 0;
         char[] buf = new char[8192];
@@ -69,16 +48,5 @@ public class TextFileReader {
         }
         r.close();
         return a;
-    }
-
-    public static void main(String[] args) throws IOException {
-        char[] f = readFile(chooseFile());
-        for (int i = 0; i < f.length; i++) {
-            if (i == 40) {
-                System.out.println("… and then "+(f.length-i)+" more characters");
-                break;
-            }
-            System.out.println(i+": "+f[i]+" ("+(int) f[i]+")");
-        }
     }
 }
