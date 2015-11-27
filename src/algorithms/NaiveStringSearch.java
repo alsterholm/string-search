@@ -12,6 +12,8 @@ public class NaiveStringSearch {
     public static ArrayList<Integer> run(char[] haystack, char[] needle, ArrayList<Integer> pos) {
         int m = haystack.length;
         int n = needle.length;
+        long time = System.nanoTime();
+
         //Itererar alla bokstäver i strängen linjärt t.o.m längden på stängen -(minus) den sökta strängens längd
         for (int i = 0; i <= m - n; i++) {
                 int j = 0;
@@ -24,6 +26,20 @@ public class NaiveStringSearch {
                     }
                 }
         }
+        time = (System.nanoTime()-time) / 1000000;
+        System.out.println("Time for search: " + time + "ms");
         return pos;
     }
+
+    public static void main(String[] args) throws IOException {
+        NaiveStringSearch test = new NaiveStringSearch();
+        char[] T = TextFileReader.readFile("C:\\Users\\Jimmy\\test.txt");
+        String P = "sorry";
+//        test.test("Tsting sdfsdfdsfsdfsdfsndfksdnkfsdnfkskfsdfnskdnskdjnfsdknfksdjfksdnsndfnsdkfnsdkfjnskjfnsdkjfnsdknfksdnfksdjnfkjsdnknsdnsddsf sdsti, dsfs dfsdfsdfsfs sdf sdfsfsfdsti", "sti", new ArrayList<Integer>());
+        ArrayList<Integer> pos = test.run(T, P.toCharArray(), new ArrayList<Integer>());
+        System.out.println("Matches in text: " + pos.size());
+
+
+    }
+
 }

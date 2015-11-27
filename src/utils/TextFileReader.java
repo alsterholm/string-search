@@ -30,6 +30,7 @@ public class TextFileReader {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             path = selectedFile.getAbsolutePath();
+            System.out.println(path);
         }
 
         return path;
@@ -57,6 +58,7 @@ public class TextFileReader {
                 i = 0;
             }
         }
+
         char[] a = new char[bytes]; // breaks if file is 2^31 chars or more
         int k = 0;
         for (char[] b : blocks) {
@@ -72,7 +74,7 @@ public class TextFileReader {
     }
 
     public static void main(String[] args) throws IOException {
-        char[] f = readFile(chooseFile());
+        char[] f = readFile("C:\\Users\\Jimmy\\test.txt");
         for (int i = 0; i < f.length; i++) {
             if (i == 40) {
                 System.out.println("… and then "+(f.length-i)+" more characters");
