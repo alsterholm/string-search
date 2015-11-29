@@ -28,19 +28,20 @@ public class Testclass {
         int matches = 0; // hash matches
 
         // if hash match at pos 0 in T
-        if (pHash == tHash) {
+        if (pHash == tHash && check(T, 0)) {
             matches++;
-            check(T, 0); // check all the chars in P agains chars in T
+            pos.add(0);
         }
 
         for (int i = M; i < N; i++ ) {
-            tHash = (tHash + Q - Math.pow(B, M-1) * T.charAt(i-M) % Q) % Q;
+            tHash = ((tHash + Q - Math.pow(B, M-1) * T.charAt(i-M) % Q) % Q);
             tHash = (tHash * B + T.charAt(i)) % Q;
 
             int offset = i - M + 1;
-            if (pHash == tHash) {
+            if (pHash == tHash && check(T, offset)) {
                 matches++;
-                check(T, offset);
+                pos.add(offset);
+                //check(T, offset);
             }
         }
         System.out.printf("Amount of hash matches: %s\n", matches);
@@ -54,36 +55,34 @@ public class Testclass {
                 return false;
             }
         }
-        pos.add(i);
         return true;
     }
 
-    public int hash(String sub, int M) {
+    public int hash(String txt, int M) {
         int h = 0;
         for (int i = 0; i < M; i++) {
-            h= (h * B + sub.charAt(i)) % Q;
+            h= (h * B + txt.charAt(i)) % Q;
         }
-
         return h;
     }
 
-    public static void main(String[] args) throws IOException {
-        String T = "";
-        try {
-            T = new String(TextFileReader.readFile("2000.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Testclass test = new Testclass();
-        String P = "sorry";
-        long time = System.nanoTime();
-
-        ArrayList<Integer> pos = test.test(T, "em ipsum", new ArrayList<Integer>());
-        long runtime = (System.nanoTime() - time) / 1000000;
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);for (int i : pos) {
-            System.out.printf("Match found at position %s.\n", i);
-        }
-
-
-    }
+//    public static void main(String[] args) throws IOException {
+//        String T = "";
+//        try {
+//            T = new String(TextFileReader.readFile("2000.txt"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Testclass test = new Testclass();
+//        String P = "sorry";
+//        long time = System.nanoTime();
+//
+//        ArrayList<Integer> pos = test.test(T, "em ipsum", new ArrayList<Integer>());
+//        long runtime = (System.nanoTime() - time) / 1000000;
+//        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);for (int i : pos) {
+//            System.out.printf("Match found at position %s.\n", i);
+//        }
+//
+//
+//    }
 }

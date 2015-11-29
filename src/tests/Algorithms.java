@@ -22,7 +22,7 @@ public class Algorithms {
         }
 
         long time = System.nanoTime();
-        a.run(T, "rem ipsum", pos);
+        a.run(T, "Lorem ipsum", pos);
         long runtime = (System.nanoTime() - time) / 1000000;
 
         System.out.println("!! KARP-RABIN !!");
@@ -38,7 +38,7 @@ public class Algorithms {
         pos = new ArrayList<Integer>();
 
         time = System.nanoTime();
-        b.run(T, "em ipsum", pos);
+        b.run(T, "Lorem ipsum", pos);
         runtime = (System.nanoTime() - time) / 1000000;
         System.out.println("!! NAIVE SEARCH !!");
         System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);
@@ -53,7 +53,7 @@ public class Algorithms {
         pos = new ArrayList<Integer>();
 
         time = System.nanoTime();
-        c.test(T, "em ipsum", pos);
+        c.test(T, "Lorem ipsum", pos);
         runtime = (System.nanoTime() - time) / 1000000;
         System.out.println("!! Testclass !!");
         System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);
