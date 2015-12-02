@@ -16,50 +16,35 @@ public class Algorithms {
         String T = "";
 
         try {
-            T = new String(TextFileReader.readFile("20000.txt"));
+            T = new String(TextFileReader.readFile("2000000.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        long time = System.nanoTime();
-        a.run(T, "Lorem ipsum", pos);
-        long runtime = (System.nanoTime() - time) / 1000000;
+        a.run(T, "ipsum", pos);
 
         System.out.println("!! KARP-RABIN !!");
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);
-        for (int i : pos) {
-            System.out.printf("Match found at position %s.\n", i);
-        }
+        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), a.getRuntime());
 
-        System.out.println("--------------------------------------------------");
-        System.out.println("--------------------------------------------------");
+        System.out.println("\n--------------------------------------------------\n");
 
         Algorithm b = new NaiveStringSearch();
         pos = new ArrayList<Integer>();
 
-        time = System.nanoTime();
-        b.run(T, "Lorem ipsum", pos);
-        runtime = (System.nanoTime() - time) / 1000000;
+        b.run(T, "ipsum", pos);
         System.out.println("!! NAIVE SEARCH !!");
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);
-        for (int i : pos) {
-            System.out.printf("Match found at position %s.\n", i);
-        }
+        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), b.getRuntime());
 
-        System.out.println("--------------------------------------------------");
-        System.out.println("--------------------------------------------------");
+        System.out.println("\n--------------------------------------------------\n");
 
-        Testclass c = new Testclass();
+        Algorithm c = new BoyerMoore();
         pos = new ArrayList<Integer>();
 
-        time = System.nanoTime();
-        c.test(T, "Lorem ipsum", pos);
-        runtime = (System.nanoTime() - time) / 1000000;
-        System.out.println("!! Testclass !!");
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), runtime);
-        for (int i : pos) {
-            System.out.printf("Match found at position %s.\n", i);
-        }
+        c.run(T, "ipsum", pos);
+        System.out.println("!! Boyer-Moore !!");
+        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), c.getRuntime());
+
+        System.out.println("\n--------------------------------------------------\n");
     }
 
     public static void main(String[] args) {

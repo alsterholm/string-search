@@ -7,4 +7,5 @@ import java.util.ArrayList;
  */
 public interface Algorithm {
     ArrayList<Integer> run(String T, String P, ArrayList<Integer> pos);
+    double getRuntime();
 }

@@ -1,59 +1,65 @@
 package algorithms;
 
+import utils.TextFileReader;
+
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by andreas on 2015-11-25.
+ * Created by Jimmy on 2015-11-27.
  */
 public class KarpRabin implements Algorithm {
-    public final static long Q = BigInteger.probablePrime(31, new Random()).longValue();
-    public final static long R = 256;
-    public static long RM;
-    public static long runtime = 0;
-    public String T;
-    public String P;
-
+    private long B = 256;
+    private long Q = BigInteger.probablePrime(31, new Random()).longValue();
+    private long E = 1;
     private int N;
     private int M;
-    private long H;
+    private double runtime;
 
     public ArrayList<Integer> run(String T, String P, ArrayList<Integer> pos) {
-        this.T = T;
-        this.P = P;
+        N = T.length();
+        M = P.length();
 
-        N = P.length();
-        M = T.length();
+        long pHash = hash(P, M); // pattern hash
+        long tHash = hash(T, M); // hash of first substring i text
+        int matches = 0; // hash matches
 
-        RM = 1;
-        for (int i = 1; i <= N-1; i++)
-            RM = (R * RM) % Q;
+        // Precompute exponent
+        for (int i = 1; i <= M - 1; i++)
+            E = (B * E) % Q;
 
-        H = hash(P);
-        long h = hash(T);
-        int matches = 0;
+        this.runtime = System.nanoTime();
 
-        runtime = System.nanoTime();
-        for (int i = N; i < M; i++) {
-//            String t = T.substring(i, i+N);
+        // if hash match at pos 0 in T
+        if (pHash == tHash && check(T, P, 0)) {
+            matches++;
+            pos.add(0);
+        }
 
-            h = nextHash(T, i, h);
-            int offset = i - N + 1;
-            if (H == h) {
+        for (int i = M; i < N; i++ ) {
+            tHash = ((tHash + Q - E * T.charAt(i-M) % Q) % Q);
+            tHash = (tHash * B + T.charAt(i)) % Q;
+
+            int offset = i - M + 1;
+            if (pHash == tHash && check(T, P, offset)) {
                 matches++;
-                if (walkthrough(T, offset)) {
-                    pos.add(offset);
-                }
+                pos.add(offset);
             }
         }
-        runtime = (System.nanoTime() - runtime) / 1000000;
-
+        this.runtime = (System.nanoTime() - this.runtime) / 1000000;
         System.out.printf("Amount of hash matches: %s\n", matches);
+
         return pos;
     }
-    public boolean walkthrough (String txt, int i) {
-        for (int j = 0; j < N; j++) {
+
+    public double getRuntime() {
+        return runtime;
+    }
+
+    public boolean check(String T, String P, int i) {
+        for (int j = 0; j < M; j++) {
             if (P.charAt(j) != T.charAt(i+j)) {
                 return false;
             }
@@ -61,30 +67,11 @@ public class KarpRabin implements Algorithm {
         return true;
     }
 
-//    private boolean walkthrough(String T, String P) {
-//        char[] t = T.toCharArray();
-//        char[] p = P.toCharArray();
-//
-//        for (int i = 0; i < t.length; i++)
-//            if (t[i] != p[i])
-//                return false;
-//
-//        return true;
-//    }
-
-    private long hash(String s) {
+    public long hash(String txt, int M) {
         long h = 0;
-
-        for (int i = 0; i < N; i++)
-            h = (R * h + s.charAt(i)) % Q;
-
-        return h;
-    }
-
-    private long nextHash(String s, int i, long h) {
-        h = (long)(h + Q - Math.pow(R, N-1) * s.charAt(i - N) % Q) % Q;
-        h = (h * R + s.charAt(i)) % Q;
-
+        for (int i = 0; i < M; i++) {
+            h= (h * B + txt.charAt(i)) % Q;
+        }
         return h;
     }
 }
