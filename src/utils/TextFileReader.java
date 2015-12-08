@@ -7,12 +7,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Created by Jimmy on 2015-11-21.
+ * Handles file reading.
+ *
+ * @author Jimmy Lindström (ae7220)
+ * @author Andreas Indal (ae2922)
  */
 public class TextFileReader {
     public static char[] readFile(String path) throws IOException {
         InputStreamReader r = new InputStreamReader(Resource.class.getResourceAsStream(path));
-        ArrayList<char[]> blocks = new ArrayList<char[]>();
+        ArrayList<char[]> blocks = new ArrayList<>();
         int bytes = 0;
         char[] buf = new char[8192];
         int i = 0;

@@ -6,45 +6,50 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by andreas on 2015-11-25.
+ * Test class.
+ *
+ * @author Jimmy Lindström (ae7220)
+ * @author Andreas Indal (ae2922)
  */
 public class Algorithms {
 
     public static void test() {
         Algorithm a = new KarpRabin();
-        ArrayList<Integer> pos = new ArrayList<Integer>();
+        ArrayList<Integer> pos = new ArrayList<>();
+        String filename = "aaa.txt"; // Needs to match a filename in the resources package.
         String T = "";
+        String P = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
         try {
-            T = new String(TextFileReader.readFile("2000000.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            T = new String(TextFileReader.readFile(filename));
+            // P = new String(TextFileReader.readFile(filename));
+        } catch (IOException e) {}
 
-        a.run(T, "ipsum", pos);
+        a.run(T, P, pos);
 
         System.out.println("!! KARP-RABIN !!");
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), a.getRuntime());
+        System.out.printf("Total matches: %s in %.2f ms (%.2f including preprocessing).\n\n",
+                pos.size(), a.getRuntime(false), a.getRuntime(true));
 
         System.out.println("\n--------------------------------------------------\n");
 
         Algorithm b = new NaiveStringSearch();
-        pos = new ArrayList<Integer>();
+        pos = new ArrayList<>();
 
-        b.run(T, "ipsum", pos);
+        b.run(T, P, pos);
         System.out.println("!! NAIVE SEARCH !!");
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), b.getRuntime());
+        System.out.printf("Total matches: %s in %.2f ms (%.2f including preprocessing).\n\n",
+                pos.size(), b.getRuntime(false), b.getRuntime(true));
 
         System.out.println("\n--------------------------------------------------\n");
 
         Algorithm c = new BoyerMoore();
-        pos = new ArrayList<Integer>();
+        pos = new ArrayList<>();
 
-        c.run(T, "ipsum", pos);
+        c.run(T, P, pos);
         System.out.println("!! Boyer-Moore !!");
-        System.out.printf("Total matches: %s in %s ms.\n\n", pos.size(), c.getRuntime());
-
-        System.out.println("\n--------------------------------------------------\n");
+        System.out.printf("Total matches: %s in %.2f ms (%.2f including preprocessing).\n\n",
+                pos.size(), c.getRuntime(false), c.getRuntime(true));
     }
 
     public static void main(String[] args) {

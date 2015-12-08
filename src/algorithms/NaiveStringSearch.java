@@ -5,11 +5,24 @@ import java.util.ArrayList;
 import utils.*;
 
 /**
- * Created by Jimmy on 2015-11-10.
+ * Implementation of a naive string search algorithm.
+ *
+ * @author Jimmy Lindström (ae7220)
+ * @author Andreas Indal (ae2922)
  */
 public class NaiveStringSearch implements Algorithm {
     private double runtime;
 
+    /**
+     * The algorithm searches naively after all occurrences
+     * of P in T.
+     *
+     * @param T String to search inside.
+     * @param P String to find.
+     * @param pos ArrayList to add indices to.
+     * @return Indices of all occurrences of P in T.
+     */
+    @Override
     public ArrayList<Integer> run(String T, String P, ArrayList<Integer> pos) {
         char[] t = T.toCharArray();
         char[] p = P.toCharArray();
@@ -17,24 +30,29 @@ public class NaiveStringSearch implements Algorithm {
         int m = t.length;
         int n = p.length;
 
-        this.runtime = System.nanoTime();
-        //Itererar alla bokstäver i strängen linjärt t.o.m längden på stängen -(minus) den sökta strängens längd
+        runtime = System.nanoTime();
         for (int i = 0; i <= m - n; i++) {
             int j = 0;
-            // Kollar ifall bokstav matchar o loopar då upp till längden av sökta strängen gånger
             while (j < n && t[i+j] == p[j]) {
                 j++;
-                // Lägger till position i listan "pos" om hela "needle" hittas i "haystack"
-                if (j >= n) {
+                if (j >= n)
                     pos.add(i);
-                }
             }
         }
-        this.runtime = (System.nanoTime() - this.runtime) / 1000000;
+        runtime = (System.nanoTime() - runtime) / 1000000;
         return pos;
     }
 
-    public double getRuntime() {
+    /**
+     * Get the algorithm’s runtime. Since the naive
+     * search doesn't include preprocessing, the
+     * includePreprocessing flag is disregarded.
+     *
+     * @param includePreprocessing Flag for whether to include preprocessing time or not.
+     * @return The algorithm’s runtime.
+     */
+    @Override
+    public double getRuntime(boolean includePreprocessing) {
         return runtime;
     }
 }
