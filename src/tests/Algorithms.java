@@ -16,9 +16,9 @@ public class Algorithms {
     public static void test() {
         Algorithm a = new KarpRabin();
         ArrayList<Integer> pos = new ArrayList<>();
-        String filename = "aaa.txt"; // Needs to match a filename in the resources package.
+        String filename = "100000.txt"; // Needs to match a filename in the resources package.
         String T = "";
-        String P = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String P = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti, repellat";
 
         try {
             T = new String(TextFileReader.readFile(filename));
